@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Perpustakaan Digital</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .btn-xs { padding: 0.1rem 0.4rem; font-size: 0.75rem; }
+        .table { vertical-align: middle; }
+    </style>
+</head>
+<body class="bg-light">
+
+    <div id="userView" class="container py-5">
+        <h2 class="text-center mb-4">📚 Perpustakaan Digital</h2>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between">
+                        <span>Koleksi Buku</span>
+                        <button class="btn btn-sm btn-outline-light" onclick="fetchBooks()">🔄 Refresh</button>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-secondary">
+                                <tr><th>ID</th><th>Judul</th><th>Penulis</th><th>Stok</th><th>Aksi</th></tr>
+                            </thead>
+                            <tbody id="bookListUser"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-secondary">
+                    <div class="card-header bg-secondary text-white">Simulasi Login</div>
+                    <div class="card-body">
+                        <label class="small fw-bold">Role:</label>
+                        <select id="userRole" class="form-select mb-2" onchange="checkAdminLogin(this.value)">
+                            <option value="user">Mahasiswa (User)</option>
+                            <option value="admin">Pustakawan (Admin)</option>
+                        </select>
+                        <label class="small fw-bold">User ID (Angka):</label>
+                        <input type="number" id="userId" class="form-control" value="123">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="adminView" class="container py-5" style="display: none;">
+        <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-primary text-white rounded shadow-sm">
+            <h2 class="mb-0">🛠️ Dashboard Admin</h2>
+            <button class="btn btn-light fw-bold" onclick="logoutAdmin()">🚪 Logout Admin</button>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card shadow-sm mb-4 border-success" id="formCard">
+                    <div id="formHeader" class="card-header bg-success text-white fw-bold">Tambah Buku Baru</div>
+                    <div class="card-body">
+                        <input type="hidden" id="editBookId" value="">
+                        
+                        <div class="mb-2">
+                            <label class="small fw-bold">Judul Buku</label>
+                            <input type="text" id="newTitle" class="form-control">
+                        </div>
+                        <div class="mb-2">
+                            <label class="small fw-bold">Penulis</label>
+                            <input type="text" id="newAuthor" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="small fw-bold">Jumlah Stok</label>
+                            <input type="number" id="newStock" class="form-control" value="1">
+                        </div>
+                        <button id="btnSave" class="btn btn-success w-100" onclick="handleSave()">Simpan ke Database</button>
+                        <button id="btnCancel" class="btn btn-link w-100 text-muted mt-1 small" style="display: none;" onclick="resetForm()">Batal Edit</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-dark text-white fw-bold">Kelola Data</div>
+                    <div class="card-body p-0">
+                        <table class="table table-sm table-hover mb-0">
+                            <thead class="table-secondary">
+                                <tr><th>ID</th><th>Judul</th><th>Stok</th><th class="text-center">Aksi</th></tr>
+                            </thead>
+                            <tbody id="bookListAdmin"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
